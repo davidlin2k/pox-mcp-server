@@ -55,8 +55,13 @@ class POXOpenFlowManager:
     def _execute_of_command(self, method: str, params: dict = None) -> Dict[str, Any]:
         logger.debug(f"Executing OpenFlow command: {method} with params: {params}")
         try:
+            s = requests.Session()
+            # Configure session to handle cookies and follow redirects
+            s.cookies = requests.cookies.RequestsCookieJar()
+            s.allow_redirects = True
+
             payload = {"method": method, "params": params or {}, "id": 1}
-            response = requests.post(f"{self.pox_server_url}/OF/", json=payload)
+            response = s.post(f"{self.pox_server_url}/OF/", data=json.dumps(payload))
             if response.status_code == 200:
                 return response.json()
             else:
@@ -107,7 +112,7 @@ class POXOpenFlowManager:
                 memo += f"- {insight}\n"
         return memo
 
-pox_server_url = os.getenv("POX_SERVER_URL", "http://localhost:8080")
+pox_server_url = os.getenv("POX_SERVER_URL", "http://localhost:8000")
 logging_level = os.getenv("LOGGING_LEVEL", "INFO")
 
 logging.basicConfig(level=logging_level, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
