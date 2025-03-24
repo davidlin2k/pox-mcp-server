@@ -82,7 +82,6 @@ The server offers five core tools:
 ### uv
 
 ```json
-# Add the server to your claude_desktop_config.json
 {
   "mcpServers": {
     "pox": {
