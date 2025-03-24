@@ -81,17 +81,22 @@ The server offers five core tools:
 
 ### uv
 
-```bash
+```json
 # Add the server to your claude_desktop_config.json
-"mcpServers": {
-  "pox": {
-    "command": "uv",
-    "args": [
-      "--directory",
-      "parent_of_servers_repo/servers/src/mcp_server_pox",
-      "run",
-      "server.py"
-    ]
+{
+  "mcpServers": {
+    "pox": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "parent_of_servers_repo/servers/src/mcp_server_pox",
+        "run",
+        "server.py"
+      ],
+      "env": {
+        "POX_SERVER_URL": "http://localhost:8000"
+      }
+    }
   }
 }
 ```
